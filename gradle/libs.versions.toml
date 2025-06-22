@@ -1,0 +1,30 @@
+[versions]
+kotlin = "2.1.0"
+
+paper-api = "1.20.4-R0.1-SNAPSHOT"
+sponge-configurate = "4.1.2"
+cloud-framework = "2.0.0"
+cloud-framework-beta = "2.0.0-beta.10"
+
+run-paper = "2.3.1"
+plugin-yml = "0.6.0"
+shadow = "8.1.1"
+
+[libraries]
+paper-api = { module = "io.papermc.paper:paper-api", version.ref = "paper-api" }
+
+configurate-core = { module = "org.spongepowered:configurate-core", version.ref = "sponge-configurate" }
+configurate-extra-kotlin = { module = "org.spongepowered:configurate-extra-kotlin", version.ref = "sponge-configurate" }
+configurate-yaml = { module = "org.spongepowered:configurate-yaml", version.ref = "sponge-configurate" }
+
+cloud-paper = { module = "org.incendo:cloud-paper", version.ref = "cloud-framework-beta" }
+cloud-minecraft-extras = { module = "org.incendo:cloud-minecraft-extras", version.ref = "cloud-framework-beta" }
+cloud-kotlin-extensions = { module = "org.incendo:cloud-kotlin-extensions", version.ref = "cloud-framework" }
+cloud-kotlin-coroutines = { module = "org.incendo:cloud-kotlin-coroutines", version.ref = "cloud-framework" }
+cloud-paper-signed-arguments = { module = "org.incendo:cloud-paper-signed-arguments", version.ref = "cloud-framework-beta" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+run-paper = { id = "xyz.jpenilla.run-paper", version.ref = "run-paper" }
+plugin-yml = { id = "net.minecrell.plugin-yml.paper", version.ref = "plugin-yml" }
+shadowJar = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
