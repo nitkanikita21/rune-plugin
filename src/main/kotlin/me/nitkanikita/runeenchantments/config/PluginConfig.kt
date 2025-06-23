@@ -14,6 +14,7 @@ class PluginConfig {
         "line 2",
         "line 3"
     )
+    var enchantmentLine = RawComponent("<i:false><gray>VeinSmelt I")
     var smeltEffect: Boolean = true
     var veinEffect: Boolean = true
     var chance = 1f

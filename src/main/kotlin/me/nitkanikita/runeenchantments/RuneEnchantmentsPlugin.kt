@@ -3,6 +3,7 @@ package me.nitkanikita.runeenchantments
 import me.nitkanikita.runeenchantments.command.Commands
 import me.nitkanikita.runeenchantments.config.ConfigLoader
 import me.nitkanikita.runeenchantments.config.PluginConfig
+import me.nitkanikita.runeenchantments.listener.AnvilEnchantListener
 import me.nitkanikita.runeenchantments.listener.BlockBreakListener
 import me.nitkanikita.runeenchantments.listener.LootListener
 import org.bukkit.command.CommandSender
@@ -28,8 +29,9 @@ class RuneEnchantmentsPlugin: JavaPlugin() {
 
             Commands(configLoader, commandManager)
 
-            server.pluginManager.registerEvents(BlockBreakListener(configLoader), this)
+            server.pluginManager.registerEvents(BlockBreakListener(configLoader, this), this)
             server.pluginManager.registerEvents(LootListener(configLoader), this)
+            server.pluginManager.registerEvents(AnvilEnchantListener(configLoader), this)
             logger.info("VeinSmelt plugin enabled.")
         } catch (e: Exception) {
             logger.severe("Failed to enable VeinSmelt plugin: ${e.message}")

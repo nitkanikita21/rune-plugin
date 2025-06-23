@@ -1,25 +1,49 @@
 package me.nitkanikita.runeenchantments.util
 
+import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.Block
+import org.bukkit.util.BlockVector
 import java.util.*
 
 object VeinFinder {
-    fun findConnectedBlocks(start: Block, type: Material, maxBlocks: Int): Set<Block> {
-        val visited = mutableSetOf<Block>()
+    fun findConnectedBlocks(start: Block, targetType: Material, maxBlocks: Int = 1000): Set<Block> {
+        val visited = mutableSetOf<BlockVector>()
+        val result = mutableSetOf<Block>()
         val queue: Queue<Block> = LinkedList()
+
+        println("start.type: ${start.type}, expected: $targetType")
+
+
         queue.add(start)
+        visited.add(start.location.toVector().toBlockVector())
+        result.add(start)
 
-        while (queue.isNotEmpty() && visited.size < maxBlocks) {
+        while (queue.isNotEmpty() && result.size < maxBlocks) {
             val current = queue.poll()
-            if (current.type != type || !visited.add(current)) continue
 
-            for (dx in -1..1) for (dy in -1..1) for (dz in -1..1) {
-                if (dx == 0 && dy == 0 && dz == 0) continue
-                val neighbor = current.getRelative(dx, dy, dz)
-                if (!visited.contains(neighbor) && neighbor.type == type) queue.add(neighbor)
+            val neighbors = listOf(
+                current.getRelative(1, 0, 0),
+                current.getRelative(-1, 0, 0),
+                current.getRelative(0, 1, 0),
+                current.getRelative(0, -1, 0),
+                current.getRelative(0, 0, 1),
+                current.getRelative(0, 0, -1)
+            )
+
+            for (neighbor in neighbors) {
+                val vector = neighbor.location.toVector().toBlockVector()
+
+                if (neighbor.type == targetType && vector !in visited) {
+                    visited.add(vector)
+                    result.add(neighbor)
+                    queue.add(neighbor)
+
+                    if (result.size >= maxBlocks) break
+                }
             }
         }
-        return visited
+
+        return result
     }
 }

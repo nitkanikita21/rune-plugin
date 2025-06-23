@@ -1,12 +1,11 @@
 package me.nitkanikita.runeenchantments.command
 
 import me.nitkanikita.runeenchantments.config.ConfigLoader
-import me.nitkanikita.runeenchantments.enchantment.VeinSmeltEnchantment
+import me.nitkanikita.runeenchantments.util.EnchantUtils
 import org.bukkit.Material
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import org.bukkit.inventory.meta.EnchantmentStorageMeta
 import org.incendo.cloud.CommandManager
 import org.incendo.cloud.bukkit.parser.PlayerParser
 
@@ -36,12 +35,11 @@ class Commands(
                 val target: Player = ctx.optional<Player>("player").orElse(ctx.sender() as Player)
 
                 val book = ItemStack(Material.ENCHANTED_BOOK)
-                val meta = book.itemMeta as EnchantmentStorageMeta
-                meta.addStoredEnchant(VeinSmeltEnchantment(config.name.bake), 1, true)
-                meta.lore(config.lore.bakeAsLore)
-                meta.displayName(config.name.bake)
-                book.itemMeta = meta
-
+                book.editMeta { meta ->
+                    meta.lore(config.lore.bakeAsLore)
+                    meta.displayName(config.name.bake)
+                }
+                EnchantUtils.enchantItem(book, config)
 
                 target.inventory.addItem(book)
             }
